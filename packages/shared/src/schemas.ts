@@ -129,3 +129,13 @@ export const searchResponseSchema = z.object({
   query: z.string(),
   results: z.array(searchResultSchema),
 });
+
+export const reviewSchema = z.object({
+  id: z.string(),
+  productId: z.string(),
+  author: z.string(),
+  rating: z.number().int().min(1).max(5),
+  date: z.string(),
+  title: z.string(),
+  comment: z.string(),
+});
