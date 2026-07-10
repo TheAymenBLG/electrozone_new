@@ -2,6 +2,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AssistantWidget from "./components/AssistantWidget";
+import CartToast from "./components/CartToast";
 import Home from "./features/storefront/Home";
 import Category from "./features/storefront/Category";
 import ProductPage from "./features/storefront/ProductPage";
@@ -23,6 +24,7 @@ function StorefrontLayout() {
       <main className="flex-1"><Outlet /></main>
       <Footer />
       <AssistantWidget />
+      <CartToast />
     </div>
   );
 }

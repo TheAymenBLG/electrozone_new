@@ -23,3 +23,8 @@ body {
   box-shadow: 0 0 22px rgba(250, 189, 0, 0.15);
   border-color: #fabd00;
 }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
