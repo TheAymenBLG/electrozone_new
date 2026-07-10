@@ -114,3 +114,18 @@ export const createOrderBodySchema = z.object({
   items: z.array(orderItemSchema),
   total: z.number().nonnegative(),
 });
+
+export const searchQuerySchema = z.object({
+  q: z.string().min(1),
+});
+
+export const searchResultSchema = z.object({
+  product: productSchema,
+  score: z.number().nonnegative(),
+  reason: z.string(),
+});
+
+export const searchResponseSchema = z.object({
+  query: z.string(),
+  results: z.array(searchResultSchema),
+});

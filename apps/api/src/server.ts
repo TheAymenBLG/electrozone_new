@@ -8,6 +8,7 @@ import { offerRouter } from "./routes/offers.js";
 import { orderRouter } from "./routes/orders.js";
 import { assistantRouter } from "./routes/assistant.js";
 import { authRouter } from "./routes/auth.js";
+import { searchRouter } from "./routes/search.js";
 import { errorHandler } from "./middleware/error.js";
 
 const app = express();
@@ -29,6 +30,7 @@ app.use("/api/offers", offerRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/assistant", assistantRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/search", searchRouter);
 
 app.use(errorHandler);
 

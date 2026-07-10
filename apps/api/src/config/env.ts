@@ -8,5 +8,8 @@ export const config = {
   adminApiKey: process.env.ADMIN_API_KEY ?? "dev-admin-key",
   geminiApiKey: process.env.GEMINI_API_KEY ?? "",
   geminiModel: process.env.GEMINI_MODEL ?? "gemini-1.5-flash",
+  ollamaBaseUrl: process.env.OLLAMA_BASE_URL ?? "http://localhost:11434",
+  ollamaApiKey: process.env.OLLAMA_API_KEY ?? "",
+  ollamaModel: process.env.OLLAMA_MODEL ?? "llama3.1",
   isProd: process.env.NODE_ENV === "production",
 };

@@ -1,5 +1,5 @@
 import type {
-  Category, Product, Bundle, Offer, ChatMessage,
+  Category, Product, Bundle, Offer, ChatMessage, SearchResponse,
 } from "@electrozone/shared";
 
 const BASE = import.meta.env.VITE_API_URL ?? "/api";
@@ -86,6 +86,9 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ history, message }),
     }),
+
+  search: (q: string) =>
+    request<SearchResponse>(`/search?q=${encodeURIComponent(q)}`),
 
   login: (password: string) =>
     request<{ token: string }>("/auth/login", {

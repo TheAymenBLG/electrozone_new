@@ -1,70 +1,10 @@
 import type { Product, Bundle, Offer, ChatMessage } from "@electrozone/shared";
 import { config } from "../config/env.js";
+import { buildCatalogText, priceProduct } from "../lib/catalogText.js";
+import { ruleBasedScore } from "../lib/ruleBasedScore.js";
 
 function formatDA(amount: number): string {
   return new Intl.NumberFormat("fr-DZ").format(Math.round(amount)) + " DA";
-}
-
-function isLive(o: Offer): boolean {
-  if (!o.isActive) return false;
-  const now = new Date().toISOString().slice(0, 10);
-  return o.startsAt <= now && o.endsAt >= now;
-}
-
-function priceProduct(product: Product, offers: Offer[]) {
-  const matching = offers.filter((o) => {
-    if (!isLive(o)) return false;
-    if (o.scope === "sitewide") return true;
-    if (o.scope === "product") return o.targetId === product.id;
-    if (o.scope === "category") return o.targetId === product.categorySlug;
-    return false;
-  });
-  let best = { finalPrice: product.price, originalPrice: product.price, discountPct: 0 };
-  for (const o of matching) {
-    const final =
-      o.type === "percentage"
-        ? product.price * (1 - o.value / 100)
-        : Math.max(0, product.price - o.value);
-    if (final < best.finalPrice) {
-      best = {
-        finalPrice: Math.round(final),
-        originalPrice: product.price,
-        discountPct: Math.round((1 - final / product.price) * 100),
-      };
-    }
-  }
-  return best;
-}
-
-function bundleFinalPrice(bundle: Bundle, products: Product[]): number {
-  const total = bundle.items.reduce((sum, it) => {
-    const p = products.find((x) => x.id === it.productId);
-    return sum + (p ? p.price * it.quantity : 0);
-  }, 0);
-  return bundle.bundlePrice ?? total;
-}
-
-function buildCatalog(products: Product[], bundles: Bundle[], offers: Offer[]): string {
-  const lines: string[] = [];
-  lines.push("PRODUITS:");
-  for (const p of products.filter((x) => x.isActive)) {
-    const pr = priceProduct(p, offers);
-    const price =
-      pr.discountPct > 0
-        ? `${formatDA(pr.finalPrice)} (au lieu de ${formatDA(pr.originalPrice)}, -${pr.discountPct}%)`
-        : formatDA(p.price);
-    const specs = Object.entries(p.specs)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join(", ");
-    lines.push(
-      `- ${p.name} | marque ${p.brand} | catégorie ${p.categorySlug} | prix ${price} | stock ${p.stock} | ${specs}`,
-    );
-  }
-  lines.push("\nPACKS:");
-  for (const b of bundles.filter((x) => x.isActive)) {
-    lines.push(`- ${b.name} | prix ${formatDA(bundleFinalPrice(b, products))} | ${b.description}`);
-  }
-  return lines.join("\n");
 }
 
 const SYSTEM = `Tu es l'assistant d'achat d'ElectroZone, un magasin d'électroménager en Algérie (prix en DA).
@@ -83,27 +23,17 @@ function ruleBasedReply(
   const budgetMatch = text.replace(/\s/g, "").match(/(\d{4,7})/);
   const budget = budgetMatch ? parseInt(budgetMatch[1], 10) : null;
 
-  const active = catalog.products.filter((p) => p.isActive);
-  const scored = active
-    .map((p) => {
-      const pr = priceProduct(p, catalog.offers);
-      let score = 0;
-      if (text.includes(p.categorySlug.replace(/-/g, " "))) score += 3;
-      if (text.includes(p.brand.toLowerCase())) score += 2;
-      for (const w of ["café", "cafe", "frigo", "réfrigérateur", "laver", "tv", "télé", "aspirateur", "micro"]) {
-        if (text.includes(w) && (p.name.toLowerCase().includes(w) || p.categorySlug.includes(w.slice(0, 4)))) score += 2;
-      }
-      return { p, price: pr.finalPrice, score };
-    })
-    .filter((x) => (budget ? x.price <= budget : true))
-    .sort((a, b) => b.score - a.score || a.price - b.price);
+  const scored = ruleBasedScore(msg, catalog.products, catalog.offers);
 
-  if (scored.length === 0) {
+  if (scored.length === 0 || scored[0].score === 0) {
     if (budget) {
+      const active = catalog.products.filter((p) => p.isActive);
       const cheapest = active
         .map((p) => ({ p, price: priceProduct(p, catalog.offers).finalPrice }))
         .sort((a, b) => a.price - b.price)[0];
-      return `Aucun produit ne rentre dans ${formatDA(budget)}. Le moins cher est ${cheapest.p.name} à ${formatDA(cheapest.price)}. Souhaitez-vous augmenter un peu le budget ?`;
+      if (cheapest) {
+        return `Aucun produit ne rentre dans ${formatDA(budget)}. Le moins cher est ${cheapest.p.name} à ${formatDA(cheapest.price)}. Souhaitez-vous augmenter un peu le budget ?`;
+      }
     }
     return "Je peux vous aider à choisir parmi les produits ElectroZone (électroménager). Dites-moi ce que vous cherchez et votre budget en DA.";
   }
@@ -112,7 +42,7 @@ function ruleBasedReply(
   const intro = budget
     ? `Voici ce que je recommande pour un budget de ${formatDA(budget)} :`
     : "Voici quelques suggestions :";
-  const list = top.map((x) => `• ${x.p.name} — ${formatDA(x.price)}`).join("\n");
+  const list = top.map((x) => `• ${x.product.name} — ${formatDA(x.finalPrice)}`).join("\n");
   return `${intro}\n${list}\n\nVoulez-vous plus de détails sur l'un d'eux ?`;
 }
 
@@ -125,7 +55,7 @@ export async function askAssistant(
     return ruleBasedReply(userMessage, catalog);
   }
   try {
-    const catalogText = buildCatalog(catalog.products, catalog.bundles, catalog.offers);
+    const catalogText = buildCatalogText(catalog.products, catalog.bundles, catalog.offers);
     const contents = [
       ...history.map((m) => ({
         role: m.role === "assistant" ? "model" : "user",

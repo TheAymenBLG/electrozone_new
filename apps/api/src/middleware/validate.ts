@@ -27,3 +27,16 @@ export function validateParams<T>(schema: ZodSchema<T>) {
     next();
   };
 }
+
+export function validateQuery<T>(schema: ZodSchema<T>) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const result = schema.safeParse(req.query);
+    if (!result.success) {
+      return res.status(400).json({
+        error: "Invalid query",
+        issues: result.error.issues,
+      });
+    }
+    next();
+  };
+}

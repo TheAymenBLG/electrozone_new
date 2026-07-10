@@ -81,3 +81,14 @@ export interface CreateOrderBody {
   items: OrderItemInput[];
   total: number;
 }
+
+export interface SearchResult {
+  product: Product;
+  score: number;
+  reason: string;
+}
+
+export interface SearchResponse {
+  query: string;
+  results: SearchResult[];
+}

@@ -6,6 +6,7 @@ import Home from "./features/storefront/Home";
 import Category from "./features/storefront/Category";
 import ProductPage from "./features/storefront/ProductPage";
 import Cart from "./features/storefront/Cart";
+import SearchPage from "./features/storefront/Search";
 import AdminLayout from "./features/admin/AdminLayout";
 import Dashboard from "./features/admin/Dashboard";
 import AdminProducts from "./features/admin/Products";
@@ -31,6 +32,7 @@ export default function App() {
     <Routes>
       <Route element={<StorefrontLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/c/:slug" element={<Category />} />
         <Route path="/p/:id" element={<ProductPage />} />
         <Route path="/cart" element={<Cart />} />
