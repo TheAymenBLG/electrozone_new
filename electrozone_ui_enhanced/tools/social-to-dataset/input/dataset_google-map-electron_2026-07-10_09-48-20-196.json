@@ -1,0 +1,162 @@
+[{
+  "title": "ElectroZone électroménager",
+  "subTitle": null,
+  "description": null,
+  "price": null,
+  "categoryName": "Magasin",
+  "address": "Aïn Smara, Algérie",
+  "neighborhood": "Ain Smara",
+  "street": null,
+  "city": "Aïn Smara",
+  "postalCode": null,
+  "state": null,
+  "countryCode": "DZ",
+  "website": "https://www.facebook.com/electrozone25/",
+  "phone": "+213 554 57 66 64",
+  "phoneUnformatted": "+213554576664",
+  "claimThisBusiness": false,
+  "location": {
+    "lat": 36.2637248,
+    "lng": 6.4827292
+  },
+  "locatedIn": null,
+  "floor": null,
+  "plusCode": "7F7M+F3 Aïn Smara, Algérie",
+  "menu": null,
+  "servicesLink": null,
+  "totalScore": 4.1,
+  "permanentlyClosed": false,
+  "temporarilyClosed": false,
+  "placeId": "ChIJBc52OZF98RIR02fl0Ao51wo",
+  "categories": [
+    "Magasin"
+  ],
+  "fid": "0x12f17d913976ce05:0xad7390ad0e567d3",
+  "cid": "781155778989221843",
+  "reviewsCount": 16,
+  "reviewsDistribution": {
+    "oneStar": 2,
+    "twoStar": 0,
+    "threeStar": 2,
+    "fourStar": 2,
+    "fiveStar": 10
+  },
+  "imagesCount": 5,
+  "imageCategories": [
+    "Tout",
+    "Intérieur",
+    "Photos du propriétaire"
+  ],
+  "scrapedAt": "2026-07-10T09:45:35.191Z",
+  "reserveTableUrl": null,
+  "googleFoodUrl": null,
+  "hotelStars": null,
+  "hotelDescription": null,
+  "checkInDate": null,
+  "checkOutDate": null,
+  "hotelAds": [],
+  "popularTimesLiveText": null,
+  "popularTimesLivePercent": null,
+  "popularTimesHistogram": {},
+  "openingHours": [
+    {
+      "day": "vendredi",
+      "hours": "15:00 to 18:00"
+    },
+    {
+      "day": "samedi",
+      "hours": "09:00 to 18:00"
+    },
+    {
+      "day": "dimanche",
+      "hours": "09:00 to 18:00"
+    },
+    {
+      "day": "lundi",
+      "hours": "09:00 to 18:00"
+    },
+    {
+      "day": "mardi",
+      "hours": "09:00 to 18:00"
+    },
+    {
+      "day": "mercredi",
+      "hours": "09:00 to 18:00"
+    },
+    {
+      "day": "jeudi",
+      "hours": "09:00 to 18:00"
+    }
+  ],
+  "peopleAlsoSearch": [
+    {
+      "category": "Recherches associées",
+      "title": "Ammar Eléctroménager",
+      "reviewsCount": 1,
+      "totalScore": 5
+    },
+    {
+      "category": "Recherches associées",
+      "title": "Gamer zone25",
+      "reviewsCount": 1,
+      "totalScore": 5
+    },
+    {
+      "category": "Recherches associées",
+      "title": "Sadiki électroménager",
+      "reviewsCount": 0,
+      "totalScore": 0
+    },
+    {
+      "category": "Recherches associées",
+      "title": "Nassim Electromenager",
+      "reviewsCount": 7,
+      "totalScore": 4.3
+    },
+    {
+      "category": "Recherches associées",
+      "title": "Massinissa-életroménager",
+      "reviewsCount": 9,
+      "totalScore": 4.1
+    }
+  ],
+  "placesTags": [],
+  "reviewsTags": [
+    {
+      "title": "interaction",
+      "count": 2
+    }
+  ],
+  "additionalInfo": {
+    "Services disponibles": [
+      {
+        "Livraison": true
+      }
+    ],
+    "Planning": [
+      {
+        "Possibilité de faire des courses rapides": true
+      }
+    ]
+  },
+  "gasPrices": [],
+  "questionsAndAnswers": [],
+  "url": "https://www.google.com/maps/search/?api=1&query=ElectroZone%20%C3%A9lectrom%C3%A9nager&query_place_id=ChIJBc52OZF98RIR02fl0Ao51wo",
+  "searchString": "Direct Detail URL: https://www.google.com/maps/place/ElectroZone+électroménager/@36.2637248,6.4801543,17z/data=!4m16!1m9!3m8!1s0x12f17d913976ce05:0xad7390ad0e567d3!2sElectroZone+électroménager!8m2!3d36.2637248!4d6.4827292!9m1!1b1!16s%2Fg%2F11kkcwlcs3!3m5!1s0x12f17d913976ce05:0xad7390ad0e567d3!8m2!3d36.2637248!4d6.4827292!16s%2Fg%2F11kkcwlcs3?entry=ttu&g_ep=EgoyMDI2MDcwNy4wIKXMDSoASAFQAw%3D%3D",
+  "language": "fr",
+  "inputStartUrl": "https://www.google.com/maps/place/ElectroZone+électroménager/@36.2637248,6.4801543,17z/data=!4m16!1m9!3m8!1s0x12f17d913976ce05:0xad7390ad0e567d3!2sElectroZone+électroménager!8m2!3d36.2637248!4d6.4827292!9m1!1b1!16s%2Fg%2F11kkcwlcs3!3m5!1s0x12f17d913976ce05:0xad7390ad0e567d3!8m2!3d36.2637248!4d6.4827292!16s%2Fg%2F11kkcwlcs3?entry=ttu&g_ep=EgoyMDI2MDcwNy4wIKXMDSoASAFQAw%3D%3D",
+  "isAdvertisement": false,
+  "imageUrl": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnVgVxQ4-DPJGmo0t5Nl6jJVAxBnkhHUPqggkiAsH8bgRtJVbe88SryQlQ5KxqsPUoyUR5yg_ERzgS1aZkUWHfBQpsxriC4S4oojIateIWhp5ROlYMghXtO9pd_TeeCUrnwImyUpfiBUdoN=w408-h306-k-no",
+  "kgmid": "/g/11kkcwlcs3",
+  "webResults": [],
+  "tableReservationLinks": [],
+  "tableReservationProviders": [],
+  "bookingLinks": [],
+  "restaurantData": {
+    "tableReservationProvider": null
+  },
+  "ownerUpdates": [],
+  "imageUrls": [],
+  "reviews": [],
+  "leadsEnrichment": []
+}]

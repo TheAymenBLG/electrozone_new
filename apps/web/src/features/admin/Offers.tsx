@@ -20,10 +20,10 @@ const empty = (): Omit<Offer, "id"> => ({
 
 function status(o: Offer): { label: string; cls: string } {
   const now = todayISO();
-  if (!o.isActive) return { label: "Désactivée", cls: "bg-gray-200 text-gray-500" };
-  if (o.startsAt > now) return { label: "Programmée", cls: "bg-blue-100 text-blue-700" };
-  if (o.endsAt < now) return { label: "Expirée", cls: "bg-gray-200 text-gray-500" };
-  return { label: "Active", cls: "bg-green-100 text-green-700" };
+  if (!o.isActive) return { label: "Désactivée", cls: "bg-overlay-10 text-cloud-muted" };
+  if (o.startsAt > now) return { label: "Programmée", cls: "bg-blue-500/15 text-blue-300" };
+  if (o.endsAt < now) return { label: "Expirée", cls: "bg-overlay-10 text-cloud-muted" };
+  return { label: "Active", cls: "bg-green-500/15 text-green-300" };
 }
 
 export default function AdminOffers() {
@@ -44,15 +44,15 @@ export default function AdminOffers() {
         <h1 className="text-2xl font-bold">Offres & Promos</h1>
         <button
           onClick={() => setEditing(empty())}
-          className="flex items-center gap-1 bg-brand text-white px-4 py-2 rounded-lg text-sm font-semibold"
+          className="flex items-center gap-1 bg-gold text-navy px-4 py-2 rounded-lg text-sm font-semibold"
         >
           <Plus size={18} /> Nouvelle offre
         </button>
       </div>
 
-      <div className="bg-white rounded-lg border overflow-x-auto">
+      <div className="bg-navy-card rounded-lg border overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-gray-500">
+          <thead className="bg-navy-tile text-left text-cloud-muted">
             <tr>
               <th className="p-3">Titre</th>
               <th className="p-3">Réduction</th>
@@ -69,15 +69,15 @@ export default function AdminOffers() {
                 <tr key={o.id}>
                   <td className="p-3 font-medium">{o.title}</td>
                   <td className="p-3">{o.type === "percentage" ? `-${o.value}%` : `-${o.value} DA`}</td>
-                  <td className="p-3 text-gray-600">{targetLabel(o)}</td>
-                  <td className="p-3 text-gray-500 text-xs">
+                  <td className="p-3 text-cloud-muted">{targetLabel(o)}</td>
+                  <td className="p-3 text-cloud-muted text-xs">
                     {o.startsAt} → {o.endsAt}
                   </td>
                   <td className="p-3">
                     <span className={`text-xs px-2 py-0.5 rounded ${st.cls}`}>{st.label}</span>
                   </td>
                   <td className="p-3 text-right">
-                    <button onClick={() => setEditing(o)} className="text-brand-light mr-3 text-xs underline">
+                    <button onClick={() => setEditing(o)} className="text-gold mr-3 text-xs underline">
                       Modifier
                     </button>
                     <button
@@ -137,8 +137,8 @@ function OfferDialog({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl w-full max-w-md">
+    <div className="fixed inset-0 bg-scrim z-50 flex items-center justify-center p-4">
+      <div className="bg-navy-card rounded-xl w-full max-w-md">
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="font-bold">{value.id ? "Modifier" : "Nouvelle"} offre</h2>
           <button onClick={onClose}>
@@ -147,19 +147,19 @@ function OfferDialog({
         </div>
         <div className="p-4 space-y-3">
           <div>
-            <label className="text-sm font-medium text-gray-600">Titre</label>
+            <label className="text-sm font-medium text-cloud-muted">Titre</label>
             <input className="input mt-1" value={form.title} onChange={(e) => set("title", e.target.value)} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-sm font-medium text-gray-600">Type</label>
+              <label className="text-sm font-medium text-cloud-muted">Type</label>
               <select className="input mt-1" value={form.type} onChange={(e) => set("type", e.target.value)}>
                 <option value="percentage">Pourcentage (%)</option>
                 <option value="fixed">Montant fixe (DA)</option>
               </select>
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-600">Valeur</label>
+              <label className="text-sm font-medium text-cloud-muted">Valeur</label>
               <input
                 type="number"
                 className="input mt-1"
@@ -169,7 +169,7 @@ function OfferDialog({
             </div>
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-600">Portée</label>
+            <label className="text-sm font-medium text-cloud-muted">Portée</label>
             <select
               className="input mt-1"
               value={form.scope}
@@ -184,7 +184,7 @@ function OfferDialog({
           </div>
           {form.scope === "product" && (
             <div>
-              <label className="text-sm font-medium text-gray-600">Produit</label>
+              <label className="text-sm font-medium text-cloud-muted">Produit</label>
               <select
                 className="input mt-1"
                 value={form.targetId ?? ""}
@@ -201,7 +201,7 @@ function OfferDialog({
           )}
           {form.scope === "category" && (
             <div>
-              <label className="text-sm font-medium text-gray-600">Catégorie</label>
+              <label className="text-sm font-medium text-cloud-muted">Catégorie</label>
               <select
                 className="input mt-1"
                 value={form.targetId ?? ""}
@@ -218,7 +218,7 @@ function OfferDialog({
           )}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-sm font-medium text-gray-600">Début</label>
+              <label className="text-sm font-medium text-cloud-muted">Début</label>
               <input
                 type="date"
                 className="input mt-1"
@@ -227,7 +227,7 @@ function OfferDialog({
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-600">Fin</label>
+              <label className="text-sm font-medium text-cloud-muted">Fin</label>
               <input
                 type="date"
                 className="input mt-1"
@@ -245,7 +245,7 @@ function OfferDialog({
           <button onClick={onClose} className="px-4 py-2 text-sm">
             Annuler
           </button>
-          <button onClick={submit} className="bg-brand text-white px-4 py-2 rounded-lg text-sm font-semibold">
+          <button onClick={submit} className="bg-gold text-navy px-4 py-2 rounded-lg text-sm font-semibold">
             Enregistrer
           </button>
         </div>

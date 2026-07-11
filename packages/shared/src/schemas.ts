@@ -108,6 +108,7 @@ export const orderItemSchema = z.object({
 
 export const createOrderBodySchema = z.object({
   customerName: z.string().min(1),
+  email: z.string().email(),
   phone: z.string().min(1),
   wilaya: z.string().min(1),
   address: z.string().min(1),

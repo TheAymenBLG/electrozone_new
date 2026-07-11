@@ -33,7 +33,7 @@ export default function AdminProducts() {
         <h1 className="text-2xl font-bold">Produits</h1>
         <button
           onClick={() => setEditing(empty(categories[0].slug))}
-          className="flex items-center gap-1 bg-brand text-white px-4 py-2 rounded-lg text-sm font-semibold"
+          className="flex items-center gap-1 bg-gold text-navy px-4 py-2 rounded-lg text-sm font-semibold"
         >
           <Plus size={18} /> Ajouter un produit
         </button>
@@ -43,12 +43,12 @@ export default function AdminProducts() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Rechercher un produit…"
-        className="w-full max-w-sm border rounded-lg px-3 py-2 mb-4 text-sm"
+        className="w-full max-w-sm border border-edge bg-navy-tile rounded-lg px-3 py-2 mb-4 text-sm"
       />
 
-      <div className="bg-white rounded-lg border overflow-x-auto">
+      <div className="bg-navy-card rounded-lg border overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-gray-500">
+          <thead className="bg-navy-tile text-left text-cloud-muted">
             <tr>
               <th className="p-3">Produit</th>
               <th className="p-3">Catégorie</th>
@@ -63,9 +63,9 @@ export default function AdminProducts() {
               <tr key={p.id}>
                 <td className="p-3">
                   <div className="font-medium">{p.name}</div>
-                  <div className="text-xs text-gray-400">{p.brand}</div>
+                  <div className="text-xs text-cloud-muted">{p.brand}</div>
                 </td>
-                <td className="p-3 text-gray-600">{p.categorySlug}</td>
+                <td className="p-3 text-cloud-muted">{p.categorySlug}</td>
                 <td className="p-3 font-semibold">{formatDA(p.price)}</td>
                 <td className="p-3">
                   <span className={p.stock <= 4 ? "text-red-500 font-semibold" : ""}>{p.stock}</span>
@@ -73,14 +73,14 @@ export default function AdminProducts() {
                 <td className="p-3">
                   <span
                     className={`text-xs px-2 py-0.5 rounded ${
-                      p.isActive ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-500"
+                      p.isActive ? "bg-green-500/15 text-green-300" : "bg-overlay-10 text-cloud-muted"
                     }`}
                   >
                     {p.isActive ? "Actif" : "Inactif"}
                   </span>
                 </td>
                 <td className="p-3 text-right whitespace-nowrap">
-                  <button onClick={() => setEditing(p)} className="text-brand-light mr-3">
+                  <button onClick={() => setEditing(p)} className="text-gold mr-3">
                     <Pencil size={16} />
                   </button>
                   <button
@@ -138,9 +138,9 @@ function ProductDialog({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-white">
+    <div className="fixed inset-0 bg-scrim z-50 flex items-center justify-center p-4">
+      <div className="bg-navy-card rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-navy-card">
           <h2 className="font-bold">{value.id ? "Modifier" : "Ajouter"} un produit</h2>
           <button onClick={onClose}>
             <X />
@@ -199,7 +199,7 @@ function ProductDialog({
           </Field>
 
           <div>
-            <label className="text-sm font-medium text-gray-600">Caractéristiques</label>
+            <label className="text-sm font-medium text-cloud-muted">Caractéristiques</label>
             <div className="space-y-2 mt-1">
               {specs.map((s, i) => (
                 <div key={i} className="flex gap-2">
@@ -229,7 +229,7 @@ function ProductDialog({
               ))}
               <button
                 onClick={() => setSpecs((arr) => [...arr, ["", ""]])}
-                className="text-sm text-brand-light"
+                className="text-sm text-gold"
               >
                 + Ajouter une caractéristique
               </button>
@@ -245,11 +245,11 @@ function ProductDialog({
             Produit actif (visible en boutique)
           </label>
         </div>
-        <div className="p-4 border-t flex justify-end gap-2 sticky bottom-0 bg-white">
+        <div className="p-4 border-t flex justify-end gap-2 sticky bottom-0 bg-navy-card">
           <button onClick={onClose} className="px-4 py-2 text-sm">
             Annuler
           </button>
-          <button onClick={submit} className="bg-brand text-white px-4 py-2 rounded-lg text-sm font-semibold">
+          <button onClick={submit} className="bg-gold text-navy px-4 py-2 rounded-lg text-sm font-semibold">
             Enregistrer
           </button>
         </div>
@@ -261,7 +261,7 @@ function ProductDialog({
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <label className="text-sm font-medium text-gray-600">{label}</label>
+      <label className="text-sm font-medium text-cloud-muted">{label}</label>
       <div className="mt-1">{children}</div>
     </div>
   );

@@ -79,6 +79,7 @@ export type PaymentMethod = "cod" | "cib" | "card" | "pickup" | "installment";
 
 export interface CreateOrderBody {
   customerName: string;
+  email: string;
   phone: string;
   wilaya: string;
   address: string;
@@ -120,6 +121,7 @@ export type OrderStatus = "nouveau" | "confirme" | "expedie" | "livre" | "annule
 export interface OrderView {
   id: string;
   customerName: string;
+  email: string;
   phone: string;
   wilaya: string;
   address: string;
@@ -127,6 +129,12 @@ export interface OrderView {
   total: number;
   paymentMethod: string;
   documentNames: string[];
+  deliveryMethod: string;
+  installation: boolean;
+  promoCode: string | null;
+  deliveryFee: number;
+  installationFee: number;
+  discountAmount: number;
   items: OrderItemInput[];
   createdAt: string;
 }

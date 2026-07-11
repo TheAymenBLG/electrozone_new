@@ -46,41 +46,92 @@ function ruleBasedReply(
   return `${intro}\n${list}\n\nVoulez-vous plus de détails sur l'un d'eux ?`;
 }
 
+async function callOllama(
+  history: ChatMessage[],
+  userMessage: string,
+  catalogText: string,
+): Promise<string> {
+  const base = config.ollamaBaseUrl.replace(/\/api$/, "");
+  const messages = [
+    { role: "system", content: `${SYSTEM}\n\n=== DONNÉES ELECTROZONE ===\n${catalogText}` },
+    ...history.map((m) => ({
+      role: m.role === "assistant" ? "assistant" : "user",
+      content: m.content,
+    })),
+    { role: "user", content: userMessage },
+  ];
+  const res = await fetch(`${base}/api/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(config.ollamaApiKey ? { Authorization: `Bearer ${config.ollamaApiKey}` } : {}),
+    },
+    body: JSON.stringify({
+      model: config.ollamaModel,
+      stream: false,
+      options: { temperature: 0.4 },
+      messages,
+    }),
+    signal: AbortSignal.timeout(20000),
+  });
+  if (!res.ok) throw new Error(`Ollama ${res.status}`);
+  const data = await res.json();
+  const content = data?.message?.content;
+  if (!content) throw new Error("Ollama empty response");
+  return content;
+}
+
+async function callGemini(
+  history: ChatMessage[],
+  userMessage: string,
+  catalogText: string,
+): Promise<string> {
+  const contents = [
+    ...history.map((m) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: m.content }],
+    })),
+    { role: "user", parts: [{ text: userMessage }] },
+  ];
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${config.geminiModel}:generateContent?key=${config.geminiApiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: `${SYSTEM}\n\n=== DONNÉES ELECTROZONE ===\n${catalogText}` }] },
+        contents,
+        generationConfig: { temperature: 0.4, maxOutputTokens: 600 },
+      }),
+    },
+  );
+  if (!res.ok) throw new Error(`Gemini ${res.status}`);
+  const data = await res.json();
+  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error("Gemini empty response");
+  return text;
+}
+
 export async function askAssistant(
   history: ChatMessage[],
   userMessage: string,
   catalog: { products: Product[]; bundles: Bundle[]; offers: Offer[] },
 ): Promise<string> {
-  if (!config.geminiApiKey) {
-    return ruleBasedReply(userMessage, catalog);
-  }
+  const catalogText = buildCatalogText(catalog.products, catalog.bundles, catalog.offers);
+
   try {
-    const catalogText = buildCatalogText(catalog.products, catalog.bundles, catalog.offers);
-    const contents = [
-      ...history.map((m) => ({
-        role: m.role === "assistant" ? "model" : "user",
-        parts: [{ text: m.content }],
-      })),
-      { role: "user", parts: [{ text: userMessage }] },
-    ];
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${config.geminiModel}:generateContent?key=${config.geminiApiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: `${SYSTEM}\n\n=== DONNÉES ELECTROZONE ===\n${catalogText}` }] },
-          contents,
-          generationConfig: { temperature: 0.4, maxOutputTokens: 600 },
-        }),
-      },
-    );
-    if (!res.ok) throw new Error(`Gemini ${res.status}`);
-    const data = await res.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    return text || ruleBasedReply(userMessage, catalog);
+    return await callOllama(history, userMessage, catalogText);
   } catch (e) {
-    console.warn("Gemini call failed, using fallback:", e);
-    return ruleBasedReply(userMessage, catalog);
+    console.warn("[assistant] Ollama failed, trying Gemini:", e instanceof Error ? e.message : e);
   }
+
+  if (config.geminiApiKey) {
+    try {
+      return await callGemini(history, userMessage, catalogText);
+    } catch (e) {
+      console.warn("[assistant] Gemini failed, using rule-based:", e instanceof Error ? e.message : e);
+    }
+  }
+
+  return ruleBasedReply(userMessage, catalog);
 }

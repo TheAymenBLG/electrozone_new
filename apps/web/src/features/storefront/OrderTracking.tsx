@@ -108,29 +108,29 @@ export default function OrderTracking() {
           </div>
         </div>
       ) : (
-        <div className="bg-navy-card border border-edge rounded-xl p-6 mb-6">
-          <div className="flex items-center justify-between">
+        <div className="bg-navy-card border border-edge rounded-xl p-4 sm:p-6 mb-6">
+          <div className="flex items-center justify-between overflow-x-auto scrollbar-hide">
             {STATUS_STEPS.map((step, i) => {
               const done = i <= currentStep;
               const isCurrent = i === currentStep;
               return (
-                <div key={step.id} className="flex items-center flex-1 last:flex-none">
-                  <div className="flex flex-col items-center gap-2">
+                <div key={step.id} className="flex items-center flex-1 last:flex-none min-w-0">
+                  <div className="flex flex-col items-center gap-2 shrink-0">
                     <div
-                      className={`w-11 h-11 rounded-full flex items-center justify-center border-2 transition-all ${
+                      className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center border-2 transition-all ${
                         done
                           ? "bg-gold border-gold text-navy"
                           : "bg-navy-tile border-edge text-cloud-muted"
                       } ${isCurrent ? "ring-2 ring-gold/30" : ""}`}
                     >
-                      <step.icon size={20} />
+                      <step.icon size={16} />
                     </div>
-                    <span className={`font-mono text-[10px] ${done ? "text-gold" : "text-cloud-muted"}`}>
+                    <span className={`font-mono text-[10px] sm:text-[11px] ${done ? "text-gold" : "text-cloud-muted"} whitespace-nowrap`}>
                       {step.label}
                     </span>
                   </div>
                   {i < STATUS_STEPS.length - 1 && (
-                    <div className={`flex-1 h-0.5 mx-1 ${i < currentStep ? "bg-gold" : "bg-edge"}`} />
+                    <div className={`flex-1 h-0.5 mx-1 sm:mx-2 ${i < currentStep ? "bg-gold" : "bg-edge"}`} />
                   )}
                 </div>
               );

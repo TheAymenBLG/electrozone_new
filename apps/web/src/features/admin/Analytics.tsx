@@ -1,17 +1,25 @@
+import { useEffect, useState } from "react";
 import { useProducts, useOffers, useCategories } from "../../data/store";
 import { dashboardStats, salesSeries, categoryBreakdown, topSelling } from "../../lib/analytics";
+import { api } from "../../lib/api-client";
 import AreaChart from "../../components/AreaChart";
 import { formatDA } from "../../lib/format";
+import type { OrderView } from "@electrozone/shared";
 
 export default function Analytics() {
   const products = useProducts();
   const offers = useOffers();
   const categories = useCategories();
+  const [realOrders, setRealOrders] = useState<OrderView[]>([]);
 
-  const stats = dashboardStats(products, offers);
-  const series = salesSeries(products, offers, 14);
-  const byCat = categoryBreakdown(products, offers);
-  const top = topSelling(products, 6);
+  useEffect(() => {
+    api.listOrders().then(setRealOrders).catch(() => {});
+  }, []);
+
+  const stats = dashboardStats(products, offers, realOrders);
+  const series = salesSeries(products, offers, realOrders, 14);
+  const byCat = categoryBreakdown(products, offers, realOrders);
+  const top = topSelling(products, realOrders, 6);
   const maxCat = Math.max(...byCat.map((c) => c.revenue), 1);
   const catName = (slug: string) => categories.find((c) => c.slug === slug)?.name ?? slug;
 

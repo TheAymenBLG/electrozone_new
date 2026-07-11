@@ -7,7 +7,10 @@ interface Props {
   labelColor?: string;
 }
 
-export default function AreaChart({ labels, data, color = "#fabd00", height = 260, gridColor = "#2d313f", labelColor = "#8f8ba8" }: Props) {
+export default function AreaChart({ labels, data, color, height = 260, gridColor, labelColor }: Props) {
+  const themeAwareColor = color ?? "var(--color-gold)";
+  const themeAwareGrid = gridColor ?? "var(--color-edge)";
+  const themeAwareLabel = labelColor ?? "var(--color-cloud-muted)";
   const W = 820, H = height, padX = 44, padTop = 16, padBottom = 28;
   const max = Math.max(...data, 1) * 1.15;
   const x = (i: number) => padX + (i / (data.length - 1)) * (W - padX * 2);
@@ -29,23 +32,23 @@ export default function AreaChart({ labels, data, color = "#fabd00", height = 26
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height }}>
       <defs>
         <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.35" />
-          <stop offset="100%" stopColor={color} stopOpacity="0" />
+          <stop offset="0%" stopColor={themeAwareColor} stopOpacity="0.35" />
+          <stop offset="100%" stopColor={themeAwareColor} stopOpacity="0" />
         </linearGradient>
       </defs>
       {grid.map((g, i) => {
         const gy = padTop + g * (H - padTop - padBottom);
         return (
           <g key={i}>
-            <line x1={padX} y1={gy} x2={W - padX} y2={gy} stroke={gridColor} strokeDasharray="5 5" />
-            <text x={8} y={gy + 4} fontSize="11" fill={labelColor}>{Math.round((max * (1 - g)) / 1000)}k</text>
+            <line x1={padX} y1={gy} x2={W - padX} y2={gy} stroke={themeAwareGrid} strokeDasharray="5 5" />
+            <text x={8} y={gy + 4} fontSize="11" fill={themeAwareLabel}>{Math.round((max * (1 - g)) / 1000)}k</text>
           </g>
         );
       })}
       <path d={area} fill="url(#areaFill)" />
-      <path d={line} fill="none" stroke={color} strokeWidth={2.5} strokeLinecap="round" />
+      <path d={line} fill="none" stroke={themeAwareColor} strokeWidth={2.5} strokeLinecap="round" />
       {labels.map((l, i) => (i % step === 0 ? (
-        <text key={i} x={x(i)} y={H - 8} fontSize="11" fill={labelColor} textAnchor="middle">{l}</text>
+        <text key={i} x={x(i)} y={H - 8} fontSize="11" fill={themeAwareLabel} textAnchor="middle">{l}</text>
       ) : null))}
     </svg>
   );

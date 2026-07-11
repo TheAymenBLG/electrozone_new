@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, GitCompare, Check } from "lucide-react";
 import type { Product, Offer } from "@electrozone/shared";
 import { priceProduct } from "../lib/offers";
 import { formatDA } from "../lib/format";
 import { useCart } from "../context/CartContext";
+import { useCompare } from "../context/CompareContext";
 
 export default function ProductCard({ product, offers }: { product: Product; offers: Offer[] }) {
   const { add } = useCart();
+  const { addToCompare, removeFromCompare, isInCompare } = useCompare();
   const pr = priceProduct(product, offers);
+  const inCompare = isInCompare(product.id);
 
   return (
-    <div className="group relative bg-navy-card border border-edge rounded-xl p-4 flex flex-col glow-hover transition-all">
+    <div className="group relative bg-navy-card border border-edge rounded-2xl p-4 flex flex-col glow-hover card-lift">
       {pr.discountPct > 0 && (
-        <div className="absolute top-4 left-4 z-10 bg-red-500/20 text-red-300 border border-red-400/30 font-mono text-xs px-2 py-1 rounded">
+        <div className="absolute top-3 left-3 z-10 bg-red-500 text-white font-mono text-xs font-bold px-2.5 py-1 rounded-full shadow-lg">
           -{pr.discountPct}%
         </div>
       )}
@@ -33,6 +36,12 @@ export default function ProductCard({ product, offers }: { product: Product; off
       </div>
       <button onClick={() => add("product", product.id)} className="w-full py-3 border border-edge rounded font-mono text-sm text-cloud hover:border-gold hover:text-gold transition-colors flex items-center justify-center gap-2 mt-auto">
         <ShoppingCart size={15} /> AJOUTER AU PANIER
+      </button>
+      <button
+        onClick={() => inCompare ? removeFromCompare(product.id) : addToCompare(product.id, product.categorySlug)}
+        className={`w-full py-2 rounded font-mono text-xs transition-colors flex items-center justify-center gap-1.5 ${inCompare ? "bg-gold/10 border border-gold/30 text-gold" : "border border-edge text-cloud-muted hover:border-gold hover:text-gold"}`}
+      >
+        {inCompare ? <><Check size={13} /> Dans le comparateur</> : <><GitCompare size={13} /> Comparer</>}
       </button>
     </div>
   );

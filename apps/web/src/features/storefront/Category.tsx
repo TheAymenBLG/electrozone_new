@@ -22,7 +22,7 @@ export default function Category() {
         <span className="font-mono text-xs text-cloud-muted">{items.length} PRODUIT(S)</span>
       </div>
       {items.length === 0 ? (
-        <div className="bg-navy-card border border-edge rounded-xl p-16 text-center text-cloud-muted">
+        <div className="bg-navy-card border border-edge rounded-2xl p-16 text-center text-cloud-muted">
           Aucun produit dans cette catégorie pour le moment.
         </div>
       ) : (

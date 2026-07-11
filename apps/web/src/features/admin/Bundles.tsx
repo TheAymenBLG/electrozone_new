@@ -25,11 +25,11 @@ export default function AdminBundles() {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-2xl font-bold">Packs</h1>
-          <p className="text-gray-500 text-sm">Composez un pack (ex: Pack Mariage) en quelques clics</p>
+          <p className="text-cloud-muted text-sm">Composez un pack (ex: Pack Mariage) en quelques clics</p>
         </div>
         <button
           onClick={() => setEditing(empty())}
-          className="flex items-center gap-1 bg-brand text-white px-4 py-2 rounded-lg text-sm font-semibold"
+          className="flex items-center gap-1 bg-gold text-navy px-4 py-2 rounded-lg text-sm font-semibold"
         >
           <Plus size={18} /> Nouveau pack
         </button>
@@ -40,11 +40,11 @@ export default function AdminBundles() {
           const total = bundleComponentTotal(b, products);
           const price = b.bundlePrice ?? total;
           return (
-            <div key={b.id} className="bg-white rounded-lg border p-4">
+            <div key={b.id} className="bg-navy-card rounded-lg border p-4">
               <div className="flex justify-between">
-                <h3 className="font-bold text-brand">{b.name}</h3>
+                <h3 className="font-bold text-cloud">{b.name}</h3>
                 <div className="flex gap-2">
-                  <button onClick={() => setEditing(b)} className="text-brand-light">
+                  <button onClick={() => setEditing(b)} className="text-gold">
                     <Pencil size={16} />
                   </button>
                   <button
@@ -55,11 +55,11 @@ export default function AdminBundles() {
                   </button>
                 </div>
               </div>
-              <p className="text-sm text-gray-500 mt-1">{b.items.length} articles</p>
+              <p className="text-sm text-cloud-muted mt-1">{b.items.length} articles</p>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="font-bold text-lg text-brand">{formatDA(price)}</span>
+                <span className="font-bold text-lg text-cloud">{formatDA(price)}</span>
                 {total > price && (
-                  <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-semibold">
+                  <span className="text-xs bg-green-500/15 text-green-300 px-2 py-0.5 rounded font-semibold">
                     -{formatDA(total - price)}
                   </span>
                 )}
@@ -132,9 +132,9 @@ function BundleDialog({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-white">
+    <div className="fixed inset-0 bg-scrim z-50 flex items-center justify-center p-4">
+      <div className="bg-navy-card rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-navy-card">
           <h2 className="font-bold">{value.id ? "Modifier" : "Nouveau"} pack</h2>
           <button onClick={onClose}>
             <X />
@@ -145,7 +145,7 @@ function BundleDialog({
           {/* Left: infos + picker */}
           <div className="space-y-3">
             <div>
-              <label className="text-sm font-medium text-gray-600">Nom du pack</label>
+              <label className="text-sm font-medium text-cloud-muted">Nom du pack</label>
               <input
                 className="input mt-1"
                 placeholder="Ex: Pack Mariage"
@@ -154,7 +154,7 @@ function BundleDialog({
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-600">Description</label>
+              <label className="text-sm font-medium text-cloud-muted">Description</label>
               <textarea
                 className="input mt-1"
                 rows={2}
@@ -163,22 +163,22 @@ function BundleDialog({
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-600">Ajouter des produits</label>
+              <label className="text-sm font-medium text-cloud-muted">Ajouter des produits</label>
               <input
                 className="input mt-1"
                 placeholder="Rechercher…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <div className="mt-2 border rounded-lg divide-y max-h-48 overflow-y-auto">
+              <div className="mt-2 border border-edge bg-navy-card rounded-lg divide-y divide-edge max-h-48 overflow-y-auto">
                 {results.map((p) => (
                   <button
                     key={p.id}
                     onClick={() => addItem(p.id)}
-                    className="w-full text-left p-2 text-sm hover:bg-gray-50 flex justify-between"
+                    className="w-full text-left p-2 text-sm hover:bg-cloud/5 flex justify-between"
                   >
                     <span>{p.name}</span>
-                    <span className="text-gray-400">{formatDA(p.price)}</span>
+                    <span className="text-cloud-muted">{formatDA(p.price)}</span>
                   </button>
                 ))}
               </div>
@@ -187,10 +187,10 @@ function BundleDialog({
 
           {/* Right: selected items + pricing */}
           <div>
-            <label className="text-sm font-medium text-gray-600">Contenu du pack</label>
-            <div className="mt-1 border rounded-lg divide-y min-h-[120px]">
+            <label className="text-sm font-medium text-cloud-muted">Contenu du pack</label>
+            <div className="mt-1 border border-edge bg-navy-card rounded-lg divide-y divide-edge min-h-[120px]">
               {items.length === 0 && (
-                <p className="p-3 text-sm text-gray-400">Aucun produit sélectionné.</p>
+                <p className="p-3 text-sm text-cloud-muted">Aucun produit sélectionné.</p>
               )}
               {items.map((it) => {
                 const p = products.find((x) => x.id === it.productId)!;
@@ -202,7 +202,7 @@ function BundleDialog({
                       min={1}
                       value={it.quantity}
                       onChange={(e) => setQty(it.productId, Number(e.target.value))}
-                      className="w-14 border rounded px-2 py-1"
+                      className="w-14 border border-edge bg-navy-tile rounded px-2 py-1"
                     />
                     <button onClick={() => removeItem(it.productId)} className="text-red-500">
                       <X size={16} />
@@ -212,13 +212,13 @@ function BundleDialog({
               })}
             </div>
 
-            <div className="mt-3 bg-gray-50 rounded-lg p-3 text-sm space-y-2">
+            <div className="mt-3 bg-navy-tile rounded-lg p-3 text-sm space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-500">Total des articles</span>
+                <span className="text-cloud-muted">Total des articles</span>
                 <span className="font-semibold">{formatDA(total)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-500">Prix du pack (optionnel)</span>
+                <span className="text-cloud-muted">Prix du pack (optionnel)</span>
                 <input
                   type="number"
                   placeholder="auto"
@@ -229,11 +229,11 @@ function BundleDialog({
                       bundlePrice: e.target.value === "" ? null : Number(e.target.value),
                     }))
                   }
-                  className="w-28 border rounded px-2 py-1 text-right"
+                  className="w-28 border border-edge bg-navy-tile rounded px-2 py-1 text-right"
                 />
               </div>
               {saving > 0 && (
-                <div className="flex justify-between text-green-700 font-semibold">
+                <div className="flex justify-between text-green-400 font-semibold">
                   <span>Économie client</span>
                   <span>{formatDA(saving)}</span>
                 </div>
@@ -251,11 +251,11 @@ function BundleDialog({
           </div>
         </div>
 
-        <div className="p-4 border-t flex justify-end gap-2 sticky bottom-0 bg-white">
+        <div className="p-4 border-t flex justify-end gap-2 sticky bottom-0 bg-navy-card">
           <button onClick={onClose} className="px-4 py-2 text-sm">
             Annuler
           </button>
-          <button onClick={submit} className="bg-brand text-white px-4 py-2 rounded-lg text-sm font-semibold">
+          <button onClick={submit} className="bg-gold text-navy px-4 py-2 rounded-lg text-sm font-semibold">
             Enregistrer le pack
           </button>
         </div>

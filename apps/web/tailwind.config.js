@@ -4,17 +4,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: { DEFAULT: "#150e2d", deep: "#100828", card: "#1d1736", tile: "#0f0a22" },
-        gold: { DEFAULT: "#fabd00", bright: "#FBBA19", soft: "#ffdf9e" },
-        edge: "#2d313f",
-        cloud: { DEFAULT: "#e7deff", muted: "#b8b6c8" },
+        ez: {
+          bg: "#0a0a1a", "bg-secondary": "#12121f", "bg-tertiary": "#1a1a2e",
+          accent: "#3b82f6", "accent-hover": "#2563eb",
+          text: "#ffffff", "text-secondary": "#d0d0e0", "text-muted": "#6b6b8c",
+          border: "#1e1e32", "border-hover": "#2a2a42",
+          success: "#4ade80", danger: "#f87171",
+        },
+        navy: {
+          DEFAULT: "var(--color-navy)",
+          deep: "var(--color-navy-deep)",
+          card: "var(--color-navy-card)",
+          tile: "var(--color-navy-tile)",
+        },
+        gold: {
+          DEFAULT: "var(--color-gold)",
+          bright: "var(--color-gold-bright)",
+          soft: "var(--color-gold-soft)",
+        },
+        edge: "var(--color-edge)",
+        cloud: {
+          DEFAULT: "var(--color-cloud)",
+          muted: "var(--color-cloud-muted)",
+        },
         brand: { DEFAULT: "#e11b22", dark: "#b3141a", light: "#ff4d52" },
-        ink: { DEFAULT: "#1c1c1c", light: "#2a2a2a" },
+        ink: {
+          DEFAULT: "var(--color-ink)",
+          light: "var(--color-ink-light)",
+        },
         mint: { DEFAULT: "#66e2c3", dark: "#3fcfae", bg: "#f4f7f6" },
+        chip: "#1a1a2e",
       },
       fontFamily: {
-        sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
-        head: ["Hanken Grotesk", "system-ui", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        head: ["Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
     },

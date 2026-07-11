@@ -123,30 +123,30 @@ export default function Cart() {
         <div className="space-y-4">
           <div className="bg-navy-card border border-edge rounded-xl divide-y divide-edge">
             {rows.map((r) => (
-              <div key={r.id} className="flex items-center gap-4 p-4">
-                <img src={r.imageUrl} alt={r.name} className="w-14 h-14 object-contain bg-navy-tile rounded-lg p-1 shrink-0" />
+              <div key={r.id} className="flex items-center gap-2 sm:gap-4 p-3 sm:p-4">
+                <img src={r.imageUrl} alt={r.name} className="hidden sm:block w-14 h-14 object-contain bg-navy-tile rounded-lg p-1 shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-cloud font-medium truncate">{r.name}</p>
+                  <p className="text-cloud font-medium truncate text-sm sm:text-base">{r.name}</p>
                   <p className="font-mono text-xs text-cloud-muted">{formatDA(r.unit)} / unité</p>
                 </div>
-                <div className="flex items-center gap-2 bg-navy-tile border border-edge rounded-lg">
+                <div className="flex items-center gap-1 sm:gap-2 bg-navy-tile border border-edge rounded-lg shrink-0">
                   <button
                     onClick={() => setQty(r.id, r.qty - 1)}
-                    className="p-2 text-cloud-muted hover:text-gold transition-colors"
+                    className="p-1.5 sm:p-2 text-cloud-muted hover:text-gold transition-colors"
                   >
                     <Minus size={14} />
                   </button>
-                  <span className="font-mono text-sm text-cloud w-8 text-center">{r.qty}</span>
+                  <span className="font-mono text-sm text-cloud w-6 sm:w-8 text-center">{r.qty}</span>
                   <button
                     onClick={() => setQty(r.id, r.qty + 1)}
-                    className="p-2 text-cloud-muted hover:text-gold transition-colors"
+                    className="p-1.5 sm:p-2 text-cloud-muted hover:text-gold transition-colors"
                   >
                     <Plus size={14} />
                   </button>
                 </div>
-                <span className="font-mono text-gold w-28 text-right">{formatDA(r.unit * r.qty)}</span>
+                <span className="font-mono text-gold w-20 sm:w-28 text-right text-sm sm:text-base shrink-0">{formatDA(r.unit * r.qty)}</span>
                 <button onClick={() => remove(r.id)} className="text-red-400 hover:text-red-300 shrink-0">
-                  <Trash2 size={18} />
+                  <Trash2 size={16} />
                 </button>
               </div>
             ))}

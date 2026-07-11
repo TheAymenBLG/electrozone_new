@@ -48,6 +48,7 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [form, setForm] = useState({
     customerName: "",
+    email: "",
     phone: "",
     wilaya: "",
     address: "",
@@ -196,6 +197,8 @@ export default function Checkout() {
 
   function validate(): string | null {
     if (!form.customerName.trim()) return "Le nom est requis";
+    if (!form.email.trim()) return "L'email est requis";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) return "Email invalide";
     if (!form.phone.trim()) return "Le téléphone est requis";
     if (paymentMethod !== "pickup") {
       if (!form.wilaya.trim()) return "La wilaya est requise";
@@ -222,6 +225,7 @@ export default function Checkout() {
 
     const body: CreateOrderBody = {
       customerName: form.customerName.trim(),
+      email: form.email.trim(),
       phone: form.phone.trim(),
       wilaya: paymentMethod === "pickup" ? "Retrait magasin" : form.wilaya.trim(),
       address: paymentMethod === "pickup" ? "Retrait magasin" : form.address.trim(),
@@ -301,6 +305,12 @@ export default function Checkout() {
                 value={form.customerName}
                 onChange={(e) => updateForm("customerName", e.target.value)}
                 placeholder="Nom complet *"
+                className="bg-navy-tile border border-edge rounded px-3 py-2.5 text-sm text-cloud placeholder-cloud/40 focus:outline-none focus:border-gold"
+              />
+              <input
+                value={form.email}
+                onChange={(e) => updateForm("email", e.target.value)}
+                placeholder="Email *"
                 className="bg-navy-tile border border-edge rounded px-3 py-2.5 text-sm text-cloud placeholder-cloud/40 focus:outline-none focus:border-gold"
               />
               <input

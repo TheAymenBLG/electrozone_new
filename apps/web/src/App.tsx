@@ -1,8 +1,11 @@
 import { Routes, Route, Outlet } from "react-router-dom";
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AssistantWidget from "./components/AssistantWidget";
 import CartToast from "./components/CartToast";
+import CompareTray from "./components/CompareTray";
+import CompareOverlay from "./components/CompareOverlay";
 import Home from "./features/storefront/Home";
 import Category from "./features/storefront/Category";
 import ProductPage from "./features/storefront/ProductPage";
@@ -21,6 +24,7 @@ import AdminCustomers from "./features/admin/Customers";
 import AdminRetention from "./features/admin/Retention";
 
 function StorefrontLayout() {
+  const [compareOpen, setCompareOpen] = useState(false);
   return (
     <div className="min-h-screen flex flex-col bg-navy text-cloud font-sans">
       <Navbar />
@@ -28,6 +32,8 @@ function StorefrontLayout() {
       <Footer />
       <AssistantWidget />
       <CartToast />
+      <CompareTray onOpen={() => setCompareOpen(true)} />
+      <CompareOverlay open={compareOpen} onClose={() => setCompareOpen(false)} />
     </div>
   );
 }

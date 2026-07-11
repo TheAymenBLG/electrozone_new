@@ -1,4 +1,4 @@
-import type { Product, Offer } from "@electrozone/shared";
+import type { Product, Offer, OrderView } from "@electrozone/shared";
 import { priceProduct } from "./offers";
 
 export function unitsSold(p: Product): number {
@@ -9,7 +9,7 @@ export function unitsSold(p: Product): number {
 
 export interface Stats { orders: number; revenue: number; income: number; expenses: number; balance: number; }
 
-export function dashboardStats(products: Product[], offers: Offer[]): Stats {
+export function dashboardStats(products: Product[], offers: Offer[], realOrders: OrderView[] = []): Stats {
   const active = products.filter((p) => p.isActive);
   let orders = 0, revenue = 0;
   for (const p of active) {
@@ -17,12 +17,16 @@ export function dashboardStats(products: Product[], offers: Offer[]): Stats {
     orders += u;
     revenue += priceProduct(p, offers).finalPrice * u;
   }
+  for (const o of realOrders) {
+    orders += 1;
+    revenue += o.total;
+  }
   const expenses = Math.round(revenue * 0.42);
   return { orders, revenue, income: revenue, expenses, balance: revenue - expenses };
 }
 
-export function salesSeries(products: Product[], offers: Offer[], days = 8) {
-  const total = dashboardStats(products, offers).revenue;
+export function salesSeries(products: Product[], offers: Offer[], realOrders: OrderView[] = [], days = 8) {
+  const total = dashboardStats(products, offers, realOrders).revenue;
   const weights: number[] = [];
   for (let i = 0; i < days; i++) {
     weights.push(Math.max(0.25, 0.6 + 0.4 * Math.sin(i * 1.3 + 1) + 0.2 * Math.sin(i * 0.7)));
@@ -31,18 +35,32 @@ export function salesSeries(products: Product[], offers: Offer[], days = 8) {
   const labels: string[] = [];
   const data: number[] = [];
   const today = new Date();
-  const scale = days / 8; // keep daily magnitude comparable across ranges
+  const scale = days / 8;
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date(today.getTime() - i * 86400000);
     labels.push(d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" }));
-    data.push(Math.round((total * weights[days - 1 - i]) / sum / scale));
+    let dayRevenue = Math.round((total * weights[days - 1 - i]) / sum / scale);
+    const dateStr = d.toISOString().slice(0, 10);
+    for (const o of realOrders) {
+      if (o.createdAt.slice(0, 10) === dateStr) dayRevenue += o.total;
+    }
+    data.push(dayRevenue);
   }
   return { labels, data };
 }
 
-export function topSelling(products: Product[], n = 4) {
-  return products.filter((p) => p.isActive).map((p) => ({ p, units: unitsSold(p) }))
-    .sort((a, b) => b.units - a.units).slice(0, n);
+export function topSelling(products: Product[], realOrders: OrderView[] = [], n = 4) {
+  const map = new Map<string, number>();
+  for (const o of realOrders) {
+    for (const it of o.items) {
+      if (it.kind === "product") map.set(it.id, (map.get(it.id) ?? 0) + it.quantity);
+    }
+  }
+  const base = products.filter((p) => p.isActive).map((p) => {
+    const realUnits = map.get(p.id) ?? 0;
+    return { p, units: unitsSold(p) + realUnits };
+  });
+  return base.sort((a, b) => b.units - a.units).slice(0, n);
 }
 
 const NAMES = [
@@ -76,13 +94,21 @@ export function demoOrders(products: Product[], offers: Offer[], n = 14): DemoOr
   return out;
 }
 
-export interface DemoCustomer { name: string; email: string; wilaya: string; orders: number; spent: number; }
+export interface CustomerInfo {
+  name: string;
+  email: string;
+  phone: string;
+  wilaya: string;
+  orders: number;
+  spent: number;
+  isReal: boolean;
+}
 
-export function demoCustomers(products: Product[], offers: Offer[]): DemoCustomer[] {
+export function demoCustomers(products: Product[], offers: Offer[]): CustomerInfo[] {
   const orders = demoOrders(products, offers, 40);
-  const map = new Map<string, DemoCustomer>();
+  const map = new Map<string, CustomerInfo>();
   orders.forEach((o) => {
-    const c = map.get(o.customer) || { name: o.customer, email: o.customer.toLowerCase().replace(/\s/g, ".") + "@mail.dz", wilaya: o.wilaya, orders: 0, spent: 0 };
+    const c = map.get(o.customer) || { name: o.customer, email: o.customer.toLowerCase().replace(/\s/g, ".") + "@mail.dz", phone: "0554 00 00 00", wilaya: o.wilaya, orders: 0, spent: 0, isReal: false };
     c.orders += 1;
     c.spent += o.total;
     map.set(o.customer, c);
@@ -90,11 +116,50 @@ export function demoCustomers(products: Product[], offers: Offer[]): DemoCustome
   return [...map.values()].sort((a, b) => b.spent - a.spent);
 }
 
-export function categoryBreakdown(products: Product[], offers: Offer[]) {
+export function realCustomers(realOrders: OrderView[]): CustomerInfo[] {
+  const map = new Map<string, CustomerInfo>();
+  for (const o of realOrders) {
+    const key = o.email || o.phone || o.customerName;
+    const existing = map.get(key);
+    if (existing) {
+      existing.orders += 1;
+      existing.spent += o.total;
+    } else {
+      map.set(key, {
+        name: o.customerName,
+        email: o.email || "",
+        phone: o.phone,
+        wilaya: o.wilaya,
+        orders: 1,
+        spent: o.total,
+        isReal: true,
+      });
+    }
+  }
+  return [...map.values()].sort((a, b) => b.spent - a.spent);
+}
+
+export function allCustomers(products: Product[], offers: Offer[], realOrders: OrderView[]): CustomerInfo[] {
+  const demo = demoCustomers(products, offers);
+  const real = realCustomers(realOrders);
+  const realKeys = new Set(real.map((c) => c.email || c.phone));
+  const filteredDemo = demo.filter((c) => !realKeys.has(c.email) && !realKeys.has(c.phone));
+  return [...real, ...filteredDemo].sort((a, b) => b.spent - a.spent);
+}
+
+export function categoryBreakdown(products: Product[], offers: Offer[], realOrders: OrderView[] = []) {
   const map = new Map<string, number>();
   products.filter((p) => p.isActive).forEach((p) => {
     const rev = priceProduct(p, offers).finalPrice * unitsSold(p);
     map.set(p.categorySlug, (map.get(p.categorySlug) || 0) + rev);
   });
+  for (const o of realOrders) {
+    for (const it of o.items) {
+      if (it.kind === "product") {
+        const p = products.find((x) => x.id === it.id);
+        if (p) map.set(p.categorySlug, (map.get(p.categorySlug) || 0) + it.unitPrice * it.quantity);
+      }
+    }
+  }
   return [...map.entries()].map(([slug, revenue]) => ({ slug, revenue })).sort((a, b) => b.revenue - a.revenue);
 }

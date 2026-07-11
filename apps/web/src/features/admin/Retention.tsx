@@ -33,8 +33,7 @@ export default function Retention() {
     setResult(null);
     const order = orders.find((o) => o.id === id);
     if (order) {
-      const guessedEmail = order.customerName.toLowerCase().replace(/\s+/g, ".") + "@mail.dz";
-      setToEmail(guessedEmail);
+      setToEmail(order.email || order.customerName.toLowerCase().replace(/\s+/g, ".") + "@mail.dz");
     }
   }
 

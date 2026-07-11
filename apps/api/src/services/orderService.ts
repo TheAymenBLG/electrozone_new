@@ -5,6 +5,7 @@ function toView(row: any): OrderView {
   return {
     id: row.id,
     customerName: row.customerName,
+    email: row.email ?? "",
     phone: row.phone,
     wilaya: row.wilaya,
     address: row.address,
@@ -12,6 +13,12 @@ function toView(row: any): OrderView {
     total: row.total,
     paymentMethod: row.paymentMethod,
     documentNames: row.documentNames ?? [],
+    deliveryMethod: row.deliveryMethod ?? "standard",
+    installation: row.installation ?? false,
+    promoCode: row.promoCode || null,
+    deliveryFee: row.deliveryFee ?? 0,
+    installationFee: row.installationFee ?? 0,
+    discountAmount: row.discountAmount ?? 0,
     items: (row.items ?? []).map((it: any) => ({
       kind: it.kind,
       id: it.kind === "product" ? it.productId : it.bundleId,
@@ -26,12 +33,19 @@ export async function createOrder(data: CreateOrderBody) {
   const row = await prisma.order.create({
     data: {
       customerName: data.customerName,
+      email: data.email,
       phone: data.phone,
       wilaya: data.wilaya,
       address: data.address,
       total: data.total,
       paymentMethod: data.paymentMethod,
       documentNames: data.documentNames,
+      deliveryMethod: data.deliveryMethod,
+      installation: data.installation,
+      promoCode: data.promoCode,
+      deliveryFee: data.deliveryFee,
+      installationFee: data.installationFee,
+      discountAmount: data.discountAmount,
       items: {
         create: data.items.map((it) => ({
           kind: it.kind,

@@ -1,0 +1,325 @@
+{
+  "store": {
+    "name": "ElectroZone électroménager",
+    "category": "Magasin",
+    "description": "Magasin d'électroménager et multimédia — produits originaux, prix compétitifs, paiement à la livraison.",
+    "address": {
+      "line": "Aïn Smara, Algérie",
+      "neighborhood": "Haricha Ammar",
+      "city": "Aïn Smara",
+      "state": "Constantine",
+      "country": "Algérie",
+      "plusCode": "7F7M+F3 Aïn Smara, Algérie"
+    },
+    "contact": {
+      "phones": [
+        "+213 554 57 66 64",
+        "0772 55 72 12"
+      ]
+    },
+    "socials": {
+      "facebook": "https://www.facebook.com/electrozone25/",
+      "instagram": "https://www.instagram.com/electrozone.constantine/",
+      "tiktok": "https://www.tiktok.com/@electrozone.const",
+      "website": "https://www.facebook.com/electrozone25/"
+    },
+    "hours": {
+      "vendredi": "15:00 to 18:00",
+      "samedi": "09:00 to 18:00",
+      "dimanche": "09:00 to 18:00",
+      "lundi": "09:00 to 18:00",
+      "mardi": "09:00 to 18:00",
+      "mercredi": "09:00 to 18:00",
+      "jeudi": "09:00 to 18:00"
+    },
+    "rating": {
+      "score": 4.1,
+      "reviews": 16
+    },
+    "audience": {
+      "instagram_followers": 7558,
+      "tiktok_followers": 34300
+    },
+    "policies": {
+      "delivery": "Livraison dans les 58 wilayas. Paiement à la livraison (COD).",
+      "warranty": "Garantie selon la marque du produit (jusqu'à 10 ans sur certains compresseurs/moteurs).",
+      "originality": "Produits 100% originaux."
+    }
+  },
+  "catalog": [
+    {
+      "id": "SM-01",
+      "cat": "climatiseur",
+      "category": "Climatiseur",
+      "brand": "Cristor",
+      "name": "Cristor Climatiseur",
+      "specs": [
+        "Inverter"
+      ],
+      "desc": "❄️ Découvrez le tout nouveau climatiseur de chez 🤩 🌬🌬🌬 | 🌬 اكتشفوا الجيل الجديد كليا من عملاق المكيفات كريسطور ايسكيم ❄️ ⚡ Tropical T3 & Full DC Inverter 🔥 أداء قوي حتى 60°C درجة مئوية 💡 استهلاك اقتصادي للطاقة مع ثبات حت",
+      "source": {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/reel/2013016119322437/"
+      }
+    },
+    {
+      "id": "SM-02",
+      "cat": "machine-a-laver",
+      "category": "Machine à laver",
+      "brand": "Maxwell",
+      "name": "Maxwell Machine à laver 12KG",
+      "specs": [
+        "12KG",
+        "Inverter"
+      ],
+      "desc": "MAXWELL 12KG | 3D Steam Care 🧺 ✅ سعة 12 كغ ✅ محرك Inverter بضمان 10 سنوات ✅ سرعة دوران 1400 دورة/الدقيقة ✅ برامج غسيل متنوعة لجميع احتياجاتك ✅ أداء قوي مع استهلاك اقتصادي للطاقة 📍 Electro Zone – حريشة عمار، عين سمارة، قس",
+      "source": {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/electrozone25/posts/pfbid0b5JQCXEgXTkFMLgj9LifmMQymaYmWetmSr3XT1TeDxke1dpixTFYJ9wc383HKmoPl"
+      }
+    },
+    {
+      "id": "SM-03",
+      "cat": "machine-a-cafe",
+      "category": "Machine à café",
+      "brand": "Bomann",
+      "name": "Bomann Machine à café",
+      "specs": [],
+      "desc": "تشكيلة جديدة من آلات القهوة بموديلات متنوعة لتناسب جميع الأذواق، من الإسبريسو إلى الكابتشينو واللاتيه ☕️ ✨ متوفر لدينا: ✅ آلات متعددة الكبسولات (4 في 1) ✅ تحضير إسبريسو، كابتشينو، لاتيه وأمريكانو ✅ مضخة ضغط عالية لاستخرا",
+      "source": {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/electrozone25/posts/pfbid02A6JP7Y9sL5PGBmLtKp9sW84DUTpt6fArpxCUtp3jvp84JobTceN9ceGh8KwV6sSMl"
+      }
+    },
+    {
+      "id": "SM-04",
+      "cat": "rafraichisseur-air",
+      "category": "Rafraîchisseur d'air",
+      "brand": "Cristor",
+      "name": "Cristor Rafraîchisseur d'air",
+      "specs": [],
+      "desc": "️حرارة الصيف ما عندهاش حل… غير مع مبردات الهواء Cristor 🌬️💧 ✅ تبريد منعش باستهلاك اقتصادي ✅ أداء قوي وتشغيل هادئ ✅ تصميم عملي وسهل التنقل ✅ زورونا في Electro Zone واختار الموديل اللي يناسبك. 📍 حريشة عمار، عين السمارة، قس",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaaX9wNAM8h/"
+      }
+    },
+    {
+      "id": "SM-05",
+      "cat": "refrigerateur",
+      "category": "Réfrigérateur",
+      "brand": "Candy",
+      "name": "Candy Réfrigérateur 630L",
+      "specs": [
+        "630L",
+        "4 Portes",
+        "Inverter",
+        "No Frost"
+      ],
+      "desc": "🔥🎁 عرض جديد ما يتفوتش! ثلاجة Candy 4 Portes | 630L | No Frost Inverter مع ميكروويف Candy هدية 🤩 إذا فاتك عرض الأسبوع الماضي… هذه فرصتك باش تستفيد من باقة أقوى وقيمة أكبر. 📍 زورونا في Electro Zone واستغل العرض قبل نفاد ال",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaV3jtwxzke/"
+      }
+    },
+    {
+      "id": "SM-06",
+      "cat": "climatiseur",
+      "category": "Climatiseur",
+      "brand": "Beko",
+      "name": "Beko Climatiseur 12000BTU",
+      "specs": [
+        "12000BTU"
+      ],
+      "desc": "❄️ Beko | Climatiseur 12000 BTU | Offre Exceptionnelle حرّ الصيف ما يرحمش… لكن مع مكيف Beko 12000 BTU راح تستمتع بجو بارد ومريح طوال اليوم🌬️ ✅ تبريد سريع وفعّال ✅ أداء قوي مع استهلاك اقتصادي للطاقة ✅ تشغيل هادئ لراحة أكب",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaVpy2CRkIM/"
+      }
+    },
+    {
+      "id": "SM-07",
+      "cat": "machine-a-laver",
+      "category": "Machine à laver",
+      "brand": "LG",
+      "name": "LG Machine à laver",
+      "specs": [
+        "Inverter"
+      ],
+      "desc": "فرصة ما تتعاودش! 🤩 🔥 PROMO LG | Lave-linge & Lave-linge Séchant 🔥 استفيدوا من تخفيضات مميزة على غسالات LG الأصلية، المعروفة بالأداء القوي، الاقتصاد في استهلاك الطاقة والتكنولوجيا الذكية. ✅ تقنية Inverter Direct Drive مع ",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaTS3AdAbU5/"
+      }
+    },
+    {
+      "id": "SM-08",
+      "cat": "refrigerateur",
+      "category": "Réfrigérateur",
+      "brand": "Hisense",
+      "name": "Hisense Réfrigérateur 4 Portes",
+      "specs": [
+        "4 Portes",
+        "Inverter",
+        "No Frost",
+        "Inox"
+      ],
+      "desc": "🥇 من أفضل ثلاجات الأربع أبواب المتوفرة في السوق… ❄️ Hisense | Réfrigérateur 4 Portes | No Frost | Inverter ✅ تصميم أنيق باللون Inox ✅ نظام Total No Frost لمنع تكون الثلج ✅ تقنية Inverter لاستهلاك اقتصادي للطاقة وتشغيل ها",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaSb3BbDznF/"
+      }
+    },
+    {
+      "id": "SM-09",
+      "cat": "refrigerateur",
+      "category": "Réfrigérateur",
+      "brand": "Brandt",
+      "name": "Brandt Réfrigérateur 500L",
+      "specs": [
+        "500L",
+        "600L",
+        "No Frost",
+        "Inox"
+      ],
+      "desc": "🧊 Brandt | 500L & 600L | No Frost ✅ نظام No Frost لمنع تكون الثلج. ✅ تبريد قوي ومتجانس يحافظ على نضارة الأطعمة. ✅ تصميم أنيق باللون Inox. ✅ استهلاك اقتصادي للطاقة. ✅ جودة وضمان 10 سنوات من Brandt. 📍 حريشة عمار، عين السما",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaQgS6VliHR/"
+      }
+    },
+    {
+      "id": "SM-10",
+      "cat": "aspirateur",
+      "category": "Aspirateur",
+      "brand": "Non spécifié",
+      "name": "Aspirateur",
+      "specs": [],
+      "desc": "🟡 Kärcher WD3 | مكنسة شفط الماء والغبار الاحترافية ✅ شفط الماء والغبار بكفاءة عالية ✅ محرك قوي بقدرة 1000 واط ✅ خزان كبير بسعة 19 لتر ✅ فلتر قماشي قابل للغسل وإعادة الاستخدام ✅ مناسبة للمنزل، الورش، المحلات، المرائب والس",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaIdTBnCpBf/"
+      }
+    },
+    {
+      "id": "SM-11",
+      "cat": "refrigerateur",
+      "category": "Réfrigérateur",
+      "brand": "Hisense",
+      "name": "Hisense Réfrigérateur 680L",
+      "specs": [
+        "680L",
+        "2 Portes",
+        "Inverter",
+        "No Frost"
+      ],
+      "desc": "⁨ 🎁 عرض الأسبوع | Candy 680L + هدية مميزة اغتنموا عرض هذا الأسبوع مع Electro Zone على ثلاجة Candy 2 Portes بسعة 680 لتر، بتقنية Inverter ونظام No Frost، مع Distributeur d’eau وتصميم واسع يلبي احتياجات العائلة. 🎁 واش راك ",
+      "source": {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/DaDvco1mN37/"
+      }
+    },
+    {
+      "id": "SM-12",
+      "cat": "refrigerateur",
+      "category": "Réfrigérateur",
+      "brand": "Condor",
+      "name": "Condor Réfrigérateur",
+      "specs": [],
+      "desc": "❄️ Mini Bar & Maxi Bar Condor تبحث على ثلاجة صغيرة، عملية وما تاخذش مساحة كبيرة؟ 👌 ✅ تبريد فعال للمشروبات والأطعمة ✅ تصنيف طاقوي A+ ✅ ضمان 10 سنوات على الضاغط ✅ أحجام عملية تناسب مختلف الاحتياجات 📍 Electro Zone – حريشة ع",
+      "source": {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@electrozone.const/video/7654650940825423125"
+      }
+    },
+    {
+      "id": "SM-13",
+      "cat": "lave-vaisselle",
+      "category": "Lave-vaisselle",
+      "brand": "Rosières",
+      "name": "Rosières Lave-vaisselle 16 Couverts",
+      "specs": [
+        "16 Couverts",
+        "Inverter"
+      ],
+      "desc": "✨ Lave vaisselle Rosières 16 Couverts راحتك سيّدتي تبدأ من هنا! ✨ ✅ سعة كبيرة 16 Couverts مناسبة للعائلات والعزومات ✅ 20 برنامج غسيل (10 مدمجة + 10 إضافية عبر تطبيق hOn) ✅ محرك Eco Power Inverter اقتصادي مع ضمان 10 سنوات",
+      "source": {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@electrozone.const/video/7654614057802042645"
+      }
+    },
+    {
+      "id": "SM-14",
+      "cat": "machine-a-laver",
+      "category": "Machine à laver",
+      "brand": "Candy",
+      "name": "Candy Machine à laver",
+      "specs": [],
+      "desc": "Machine à laver candy Rapido",
+      "source": {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@electrozone.const/video/7639363749098392852"
+      }
+    },
+    {
+      "id": "SM-15",
+      "cat": "lave-vaisselle",
+      "category": "Lave-vaisselle",
+      "brand": "Condor",
+      "name": "Condor Lave-vaisselle",
+      "specs": [],
+      "desc": "Lave-vaisselle condor luxa",
+      "source": {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@electrozone.const/video/7637905520602516757"
+      }
+    },
+    {
+      "id": "SM-16",
+      "cat": "machine-a-cafe",
+      "category": "Machine à café",
+      "brand": "Non spécifié",
+      "name": "Machine à café",
+      "specs": [],
+      "desc": "Machine à café arcodym",
+      "source": {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@electrozone.const/video/7637173556106824981"
+      }
+    },
+    {
+      "id": "SM-17",
+      "cat": "climatiseur",
+      "category": "Climatiseur",
+      "brand": "Candy",
+      "name": "Candy Climatiseur",
+      "specs": [],
+      "desc": "Climatiseur candy",
+      "source": {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@electrozone.const/video/7636514862973111573"
+      }
+    },
+    {
+      "id": "SM-18",
+      "cat": "refrigerateur",
+      "category": "Réfrigérateur",
+      "brand": "Candy",
+      "name": "Candy Réfrigérateur 4 portes",
+      "specs": [
+        "4 portes"
+      ],
+      "desc": "Frigo candy 4 portes",
+      "source": {
+        "platform": "tiktok",
+        "url": "https://www.tiktok.com/@electrozone.const/video/7633453228608195861"
+      }
+    }
+  ],
+  "_meta": {
+    "generated_from": "Apify social scrapes (facebook, instagram, tiktok, google maps)",
+    "posts_scanned": 34,
+    "products_extracted": 18,
+    "note": "Prices only included when explicitly present in the post text. Assistant must never invent prices/specs."
+  }
+}

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Bell, Wallet, ShoppingCart, BadgePercent, TrendingUp, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useProducts, useOffers } from "../../data/store";
 import { dashboardStats, salesSeries, topSelling } from "../../lib/analytics";
+import { api } from "../../lib/api-client";
 import AreaChart from "../../components/AreaChart";
 import { formatDA } from "../../lib/format";
+import type { OrderView } from "@electrozone/shared";
 
 function StatCard({ title, value, icon: Icon, hint, change }: { title: string; value: string; icon: typeof Wallet; hint: string; change: string }) {
   return (
@@ -38,11 +40,16 @@ export default function Dashboard() {
   const products = useProducts();
   const offers = useOffers();
   const [period, setPeriod] = useState("Juillet 2024");
+  const [realOrders, setRealOrders] = useState<OrderView[]>([]);
 
-  const stats = dashboardStats(products, offers);
+  useEffect(() => {
+    api.listOrders().then(setRealOrders).catch(() => {});
+  }, []);
+
+  const stats = dashboardStats(products, offers, realOrders);
   const activeOffers = offers.filter((o) => o.isActive).length;
-  const series = salesSeries(products, offers, PERIODS[period]);
-  const top = topSelling(products, 4);
+  const series = salesSeries(products, offers, realOrders, PERIODS[period]);
+  const top = topSelling(products, realOrders, 4);
 
   return (
     <div className="max-w-6xl">

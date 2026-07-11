@@ -1,10 +1,13 @@
 import { useParams, Link } from "react-router-dom";
-import { ShoppingCart, ShieldCheck, Truck, Wallet, Star, Package, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { ShoppingCart, ShieldCheck, Truck, Wallet, Star, Package, ArrowRight, GitCompare, Check, Ruler } from "lucide-react";
 import { useProducts, useOffers, useBundles, useCategories } from "../../data/store";
 import { priceProduct, bundleFinalPrice } from "../../lib/offers";
 import { formatDA } from "../../lib/format";
 import { useCart } from "../../context/CartContext";
+import { useCompare } from "../../context/CompareContext";
 import { getMockReviews, getRatingSummary } from "../../lib/reviews";
+import ARViewer from "../../components/ARViewer";
 
 function Stars({ rating, size = 16 }: { rating: number; size?: number }) {
   return (
@@ -27,6 +30,8 @@ export default function ProductPage() {
   const bundles = useBundles();
   const categories = useCategories();
   const { add } = useCart();
+  const { addToCompare, removeFromCompare, isInCompare } = useCompare();
+  const [arOpen, setArOpen] = useState(false);
   const product = products.find((p) => p.id === id);
 
   if (!product)
@@ -46,6 +51,11 @@ export default function ProductPage() {
     (b) => b.isActive && b.items.some((it) => it.productId === product.id),
   );
 
+  const hasDimensions = !!(product.specs.largeur && product.specs.hauteur && product.specs.profondeur);
+  const arWidth = Number(product.specs.largeur) / 100 || 0.5;
+  const arHeight = Number(product.specs.hauteur) / 100 || 0.5;
+  const arDepth = Number(product.specs.profondeur) / 100 || 0.5;
+
   return (
     <div className="max-w-5xl mx-auto px-5 md:px-10 py-10">
       <nav className="font-mono text-xs text-cloud-muted mb-6">
@@ -57,13 +67,14 @@ export default function ProductPage() {
       </nav>
 
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="relative bg-navy-tile rounded-xl border border-edge overflow-hidden">
+        <div className="relative bg-navy-tile rounded-2xl border border-edge overflow-hidden">
           {pr.discountPct > 0 && (
             <span className="absolute top-4 left-4 z-10 bg-red-500/20 text-red-300 border border-red-400/30 font-mono text-xs px-2 py-1 rounded">
               -{pr.discountPct}%
             </span>
           )}
-          <img src={product.imageUrl} alt={product.name} className="w-full aspect-square object-contain p-8" />
+          <div className="absolute inset-0 bg-gold/5 blur-3xl" />
+          <img src={product.imageUrl} alt={product.name} className="relative w-full aspect-square object-contain p-8" />
         </div>
         <div>
           <p className="font-mono text-xs text-cloud-muted uppercase tracking-wider">{product.brand}</p>
@@ -98,12 +109,28 @@ export default function ProductPage() {
           <button
             onClick={() => add("product", product.id)}
             disabled={product.stock === 0}
-            className="mt-6 w-full sm:w-auto bg-gold text-navy font-mono font-bold px-8 py-4 rounded hover:bg-gold-bright disabled:opacity-50 flex items-center justify-center gap-2 transition-colors"
+            className="mt-6 w-full sm:w-auto bg-gold text-navy font-mono font-bold px-8 py-4 rounded-full hover:bg-gold-bright disabled:opacity-50 flex items-center justify-center gap-2 transition-all shadow-lg shadow-gold/10"
           >
             <ShoppingCart size={18} /> AJOUTER AU PANIER
           </button>
 
-          <div className="mt-8 grid grid-cols-3 gap-3 font-mono text-[11px] text-cloud-muted">
+          <button
+            onClick={() => isInCompare(product.id) ? removeFromCompare(product.id) : addToCompare(product.id, product.categorySlug)}
+            className={`mt-3 w-full sm:w-auto font-mono font-bold px-6 py-2.5 rounded-full transition-all flex items-center justify-center gap-2 text-sm ${isInCompare(product.id) ? "bg-gold/10 border border-gold/30 text-gold" : "border border-edge text-cloud-muted hover:border-gold hover:text-gold"}`}
+          >
+            {isInCompare(product.id) ? <><Check size={16} /> Dans le comparateur</> : <><GitCompare size={16} /> Comparer</>}
+          </button>
+
+          {hasDimensions && (
+            <button
+              onClick={() => setArOpen(true)}
+              className="mt-3 w-full sm:w-auto bg-gold/10 border border-gold/30 text-gold font-mono font-bold px-6 py-2.5 rounded-full transition-all flex items-center justify-center gap-2 text-sm hover:bg-gold hover:text-navy"
+            >
+              <Ruler size={16} /> Tester en AR
+            </button>
+          )}
+
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-[11px] text-cloud-muted">
             <div className="flex flex-col items-center gap-1.5 text-center"><ShieldCheck className="text-gold" size={20} /> PRODUITS ORIGINAUX</div>
             <div className="flex flex-col items-center gap-1.5 text-center"><Truck className="text-gold" size={20} /> LIVRAISON 58 WILAYAS</div>
             <div className="flex flex-col items-center gap-1.5 text-center"><Wallet className="text-gold" size={20} /> PAIEMENT À LA LIVRAISON</div>
@@ -202,6 +229,15 @@ export default function ProductPage() {
             })}
           </div>
         </section>
+      )}
+      {arOpen && (
+        <ARViewer
+          width={arWidth}
+          height={arHeight}
+          depth={arDepth}
+          productName={product.name}
+          onClose={() => setArOpen(false)}
+        />
       )}
     </div>
   );
