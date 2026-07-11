@@ -9,6 +9,7 @@ import { orderRouter } from "./routes/orders.js";
 import { assistantRouter } from "./routes/assistant.js";
 import { authRouter } from "./routes/auth.js";
 import { searchRouter } from "./routes/search.js";
+import { retentionRouter } from "./routes/retention.js";
 import { errorHandler } from "./middleware/error.js";
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/api/orders", orderRouter);
 app.use("/api/assistant", assistantRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/search", searchRouter);
+app.use("/api/retention", retentionRouter);
 
 app.use(errorHandler);
 

@@ -11,6 +11,7 @@ interface CartCtx {
   lines: CartLine[];
   add: (kind: "product" | "bundle", id: string) => void;
   remove: (id: string) => void;
+  setQty: (id: string, quantity: number) => void;
   clear: () => void;
   count: number;
   toast: ToastInfo | null;
@@ -36,12 +37,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const remove = useCallback((id: string) => setLines((prev) => prev.filter((l) => l.id !== id)), []);
+  const setQty = useCallback((id: string, quantity: number) => {
+    setLines((prev) => {
+      if (quantity <= 0) return prev.filter((l) => l.id !== id);
+      return prev.map((l) => (l.id === id ? { ...l, quantity } : l));
+    });
+  }, []);
   const clear = useCallback(() => setLines([]), []);
   const dismissToast = useCallback(() => setToast(null), []);
   const count = lines.reduce((s, l) => s + l.quantity, 0);
 
   return (
-    <Ctx.Provider value={{ lines, add, remove, clear, count, toast, dismissToast }}>
+    <Ctx.Provider value={{ lines, add, remove, setQty, clear, count, toast, dismissToast }}>
       {children}
     </Ctx.Provider>
   );

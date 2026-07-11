@@ -1,7 +1,7 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
 import {
   LayoutDashboard, PieChart, Package, BadgePercent, Boxes,
-  ShoppingBag, Users, Settings, Store, RotateCcw,
+  ShoppingBag, Users, Settings, Store, RotateCcw, Mail,
 } from "lucide-react";
 import { resetStore } from "../../data/store";
 
@@ -13,6 +13,7 @@ const ROUTES = [
   { to: "/admin/offers", label: "Offres & Promos", icon: BadgePercent, end: false },
   { to: "/admin/orders", label: "Commandes", icon: ShoppingBag, end: false },
   { to: "/admin/customers", label: "Clients", icon: Users, end: false },
+  { to: "/admin/retention", label: "Rétention", icon: Mail, end: false },
 ];
 
 export default function AdminLayout() {

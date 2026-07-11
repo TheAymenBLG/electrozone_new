@@ -7,6 +7,8 @@ import Home from "./features/storefront/Home";
 import Category from "./features/storefront/Category";
 import ProductPage from "./features/storefront/ProductPage";
 import Cart from "./features/storefront/Cart";
+import Checkout from "./features/storefront/Checkout";
+import OrderTracking from "./features/storefront/OrderTracking";
 import SearchPage from "./features/storefront/Search";
 import AdminLayout from "./features/admin/AdminLayout";
 import Dashboard from "./features/admin/Dashboard";
@@ -16,6 +18,7 @@ import AdminOffers from "./features/admin/Offers";
 import AdminAnalytics from "./features/admin/Analytics";
 import AdminOrders from "./features/admin/Orders";
 import AdminCustomers from "./features/admin/Customers";
+import AdminRetention from "./features/admin/Retention";
 
 function StorefrontLayout() {
   return (
@@ -38,6 +41,8 @@ export default function App() {
         <Route path="/c/:slug" element={<Category />} />
         <Route path="/p/:id" element={<ProductPage />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order/:id" element={<OrderTracking />} />
       </Route>
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
@@ -47,6 +52,7 @@ export default function App() {
         <Route path="offers" element={<AdminOffers />} />
         <Route path="orders" element={<AdminOrders />} />
         <Route path="customers" element={<AdminCustomers />} />
+        <Route path="retention" element={<AdminRetention />} />
       </Route>
     </Routes>
   );

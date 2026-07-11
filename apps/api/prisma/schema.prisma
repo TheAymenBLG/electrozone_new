@@ -75,15 +75,17 @@ model Offer {
 }
 
 model Order {
-  id           String      @id @default(uuid())
-  customerName String
-  phone        String
-  wilaya       String
-  address      String
-  status       String      @default("nouveau")
-  total        Float
-  items        OrderItem[]
-  createdAt    DateTime    @default(now())
+  id             String      @id @default(uuid())
+  customerName   String
+  phone          String
+  wilaya         String
+  address        String
+  status         String      @default("nouveau")
+  total          Float
+  paymentMethod  String      @default("cod")
+  documentNames  String[]    @default([])
+  items          OrderItem[]
+  createdAt      DateTime    @default(now())
 
   @@map("orders")
 }

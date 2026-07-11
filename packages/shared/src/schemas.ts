@@ -113,6 +113,14 @@ export const createOrderBodySchema = z.object({
   address: z.string().min(1),
   items: z.array(orderItemSchema),
   total: z.number().nonnegative(),
+  deliveryMethod: z.enum(["standard", "scheduled"]),
+  installation: z.boolean(),
+  promoCode: z.string().nullable(),
+  deliveryFee: z.number().nonnegative(),
+  installationFee: z.number().nonnegative(),
+  discountAmount: z.number().nonnegative(),
+  paymentMethod: z.enum(["cod", "cib", "card", "pickup", "installment"]),
+  documentNames: z.array(z.string()),
 });
 
 export const searchQuerySchema = z.object({
@@ -138,4 +146,14 @@ export const reviewSchema = z.object({
   date: z.string(),
   title: z.string(),
   comment: z.string(),
+});
+
+export const updateOrderStatusBodySchema = z.object({
+  status: z.enum(["nouveau", "confirme", "expedie", "livre", "annule"]),
+});
+
+export const triggerRetentionBodySchema = z.object({
+  type: z.enum(["abandoned_cart", "promo", "follow_up"]),
+  orderId: z.string().min(1),
+  toEmail: z.string().email(),
 });

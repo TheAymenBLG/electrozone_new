@@ -11,5 +11,7 @@ export const config = {
   ollamaBaseUrl: process.env.OLLAMA_BASE_URL ?? "http://localhost:11434",
   ollamaApiKey: process.env.OLLAMA_API_KEY ?? "",
   ollamaModel: process.env.OLLAMA_MODEL ?? "llama3.1",
+  resendApiKey: process.env.RESEND_API_KEY ?? "",
+  resendFromEmail: process.env.RESEND_FROM_EMAIL ?? "ElectroZone <onboarding@resend.dev>",
   isProd: process.env.NODE_ENV === "production",
 };

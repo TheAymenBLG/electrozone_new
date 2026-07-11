@@ -1,5 +1,5 @@
 import type {
-  Category, Product, Bundle, Offer, ChatMessage, SearchResponse,
+  Category, Product, Bundle, Offer, ChatMessage, SearchResponse, CreateOrderBody, OrderView, OrderStatus, RetentionTriggerType, RetentionResult,
 } from "@electrozone/shared";
 
 const BASE = import.meta.env.VITE_API_URL ?? "/api";
@@ -71,14 +71,32 @@ export const api = {
       headers: authHeaders(),
     }),
 
-  createOrder: (data: {
-    customerName: string; phone: string; wilaya: string; address: string;
-    items: { kind: "product" | "bundle"; id: string; quantity: number; unitPrice: number }[];
-    total: number;
-  }) =>
+  createOrder: (data: CreateOrderBody) =>
     request<{ id: string; status: string }>("/orders", {
       method: "POST",
       body: JSON.stringify(data),
+    }),
+
+  getOrder: (id: string) =>
+    request<OrderView>(`/orders/${id}`),
+
+  listOrders: () =>
+    request<OrderView[]>("/orders", {
+      headers: authHeaders(),
+    }),
+
+  updateOrderStatus: (id: string, status: OrderStatus) =>
+    request<OrderView>(`/orders/${id}/status`, {
+      method: "PATCH",
+      headers: authHeaders(),
+      body: JSON.stringify({ status }),
+    }),
+
+  triggerRetention: (type: RetentionTriggerType, orderId: string, toEmail: string) =>
+    request<RetentionResult>("/retention/trigger", {
+      method: "POST",
+      headers: authHeaders(),
+      body: JSON.stringify({ type, orderId, toEmail }),
     }),
 
   askAssistant: (history: ChatMessage[], message: string) =>

@@ -73,6 +73,10 @@ export interface OrderItemInput {
   unitPrice: number;
 }
 
+export type DeliveryMethod = "standard" | "scheduled";
+
+export type PaymentMethod = "cod" | "cib" | "card" | "pickup" | "installment";
+
 export interface CreateOrderBody {
   customerName: string;
   phone: string;
@@ -80,6 +84,14 @@ export interface CreateOrderBody {
   address: string;
   items: OrderItemInput[];
   total: number;
+  deliveryMethod: DeliveryMethod;
+  installation: boolean;
+  promoCode: string | null;
+  deliveryFee: number;
+  installationFee: number;
+  discountAmount: number;
+  paymentMethod: PaymentMethod;
+  documentNames: string[];
 }
 
 export interface SearchResult {
@@ -101,4 +113,38 @@ export interface Review {
   date: string;
   title: string;
   comment: string;
+}
+
+export type OrderStatus = "nouveau" | "confirme" | "expedie" | "livre" | "annule";
+
+export interface OrderView {
+  id: string;
+  customerName: string;
+  phone: string;
+  wilaya: string;
+  address: string;
+  status: string;
+  total: number;
+  paymentMethod: string;
+  documentNames: string[];
+  items: OrderItemInput[];
+  createdAt: string;
+}
+
+export interface UpdateOrderStatusBody {
+  status: OrderStatus;
+}
+
+export type RetentionTriggerType = "abandoned_cart" | "promo" | "follow_up";
+
+export interface TriggerRetentionBody {
+  type: RetentionTriggerType;
+  orderId: string;
+  toEmail: string;
+}
+
+export interface RetentionResult {
+  ok: boolean;
+  messageId: string | null;
+  error: string | null;
 }

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Search, Heart, User, ShoppingCart } from "lucide-react";
+import { Search, Heart, User, ShoppingCart, PackageSearch } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useCategories } from "../data/store";
 import { LOGO_URL } from "../data/brand";
@@ -9,12 +9,22 @@ export default function Navbar() {
   const { count } = useCart();
   const categories = useCategories();
   const [q, setQ] = useState("");
+  const [trackingId, setTrackingId] = useState("");
+  const [showTrack, setShowTrack] = useState(false);
   const navigate = useNavigate();
 
   function search() {
     const term = q.trim();
     if (!term) return;
     navigate(`/search?q=${encodeURIComponent(term)}`);
+  }
+
+  function trackOrder() {
+    const id = trackingId.trim();
+    if (!id) return;
+    navigate(`/order/${id}`);
+    setShowTrack(false);
+    setTrackingId("");
   }
 
   return (
@@ -52,6 +62,35 @@ export default function Navbar() {
           <div className="flex items-center gap-2 ml-auto">
             <button className="p-2 rounded-full text-cloud/80 hover:text-gold hover:bg-white/5 transition"><Heart size={20} /></button>
             <Link to="/admin" className="p-2 rounded-full text-cloud/80 hover:text-gold hover:bg-white/5 transition"><User size={20} /></Link>
+            <div className="relative">
+              <button
+                onClick={() => setShowTrack((s) => !s)}
+                className="p-2 rounded-full text-cloud/80 hover:text-gold hover:bg-white/5 transition"
+                title="Suivre une commande"
+              >
+                <PackageSearch size={20} />
+              </button>
+              {showTrack && (
+                <div className="absolute right-0 top-full mt-2 w-64 bg-navy-card border border-edge rounded-xl shadow-2xl p-3 z-50">
+                  <p className="font-mono text-[11px] text-cloud-muted mb-2 uppercase tracking-wider">Suivre une commande</p>
+                  <div className="flex gap-2">
+                    <input
+                      value={trackingId}
+                      onChange={(e) => setTrackingId(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && trackOrder()}
+                      placeholder="N° de commande"
+                      className="flex-1 bg-navy-tile border border-edge rounded px-2.5 py-2 text-sm text-cloud placeholder-cloud/40 focus:outline-none focus:border-gold"
+                    />
+                    <button
+                      onClick={trackOrder}
+                      className="bg-gold text-navy font-mono text-xs font-bold px-3 rounded hover:bg-gold-bright transition-colors"
+                    >
+                      OK
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link to="/cart" className="flex items-center gap-2 px-4 py-2 rounded-full bg-navy-tile border border-edge text-gold hover:border-gold transition">
               <ShoppingCart size={18} />
               <span className="font-mono text-sm">{count}</span>
